@@ -1,0 +1,32 @@
+body {
+	font-size:75%;
+	color:#222;
+	background:#fff;
+	font-family:Tahoma, "Lucida Sans Unicode", "Lucida Grande", Verdana, sans-serif;
+	}
+.page-header {
+	color: #0082B6;
+	background-color: #C6E09B;
+	font-weight:bold;
+	font-size: 16pt;
+	padding: 4px;
+}
+.list-panel {
+	position: absolute;
+	background-color: #e2efcd;
+	top: 60px;
+	bottom: 0;
+	left: 0;
+	width: 300px;
+	min-width: 200px;
+}
+.content-panel {
+	position: absolute;
+	overflow-x: hidden;
+	bottom: 0;
+	top: 60px;
+	right: 0;
+	left: 300px;
+	xmin-width: 400px;
+	border: 1;
+}

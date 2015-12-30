@@ -1,0 +1,47 @@
+.tabs {
+	height:30px;
+	/*padding: 10px;*/
+	font-size: 1em;
+	list-style:none;
+	margin: 0px;
+	background-color: #C6E09B;
+	-webkit-padding-start: 0;
+}
+.tab-panel {
+	background-color: #e2efcd;
+}
+.tabs .active {
+	/* font-weight: bold;*/
+	background-color: #e2efcd;
+}
+.tabs > li {
+	font-size: 12px;
+	font-weight: normal;
+	margin:0 2px 0 0;
+	padding:7px 10px;
+	display:block;
+	float:left;
+	color:#FFF;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	
+	-moz-border-radius-topleft: 8px;
+	-moz-border-radius-topright: 8px;
+	-moz-border-radius-bottomright: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-top-left-radius:8px;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	 
+	background-color: #C6E09B;
+}
+.tabs > ul > li:hover {
+	background: #FFFFFF; /* old browsers */
+	background: -moz-linear-gradient(top, #FFFFFF 0%, #F3F3F3 10%, #F3F3F3 50%, #FFFFFF 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(10%,#F3F3F3), color-stop(50%,#F3F3F3), color-stop(100%,#FFFFFF)); /* webkit */
+	cursor:pointer;
+	color: #333;
+}
+

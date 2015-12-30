@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title>GeoServer Admin</title>
+    
+<link rel="stylesheet" type="text/css" href="../common/css/normalize.css">
+<link rel="stylesheet" type="text/css" href="tabs.css">
+<link rel="stylesheet" type="text/css" href="test.css">
+
+</head>
+
+<body onload="initPage()">
+	<div class='page-header'>GeoServer Admin
+				<div class='reload_btn'><input type='button' id='btn_reload-data' value='Reload'></div>
+
+	</div>
+
+	<div class='list-panel'>
+		<div>PROVINCIAL_PROTECTED_AREA_POLYXXXXXXXXXXXXXXXXXXX</div>
+	</div>
+	<div class='content-panel'>
+				<div id='map_div' style='width: 100%; height: 100%;'></div>
+	</div>
+	
+<script type="text/javascript" src="../../cwm/lib/proj4js-compressed.js"></script>
+<script type="text/javascript" src="../../cwm/lib/OpenLayers.js"></script>
+<script type="text/javascript" src="../../cwm/lib/jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="lib/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="lib/jquery.color-2.1.2.min.js"></script>
+<script type="text/javascript" src="lib/jquery.multiselect.js"></script>
+<script type="text/javascript" src="../../cwm/lib/jquery/qtip2/jquery.qtip.min.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="gsrest.js"></script>
+<script type="text/javascript" src="gsadmin.js"></script>
+<script type="text/javascript" src="gsadminMap.js"></script>
+<script type="text/javascript" src="SLD.js"></script>
+<script type="text/javascript">
+
+function initPage() {
+	
+	initMap('map_div');
+}
+
+function initUI()
+{
+	var tabs = new Tabs();
+	tabs.init('tab-data');
+	$('.info-panel').hide();
+	$('#map-tab').click(function() {
+		$('.info-panel').hide();
+		$('#info-panel-map').show();
+	});
+	
+	$('#btn_reload-data').on('click', function() {
+		gsadmin.load();
+	})
+	$('#btn-style-readable').on('click', function() {
+		var sldSimp = SLD.readableSLD( $('#style-text').val() );
+		$('#style-text').text(sldSimp);
+	})
+
+}
+
+function initMap(mapDiv) {
+    var map = new OpenLayers.Map({        
+            theme: null,   // disable OL auto-loading of CSS
+    		div: mapDiv, 
+    		projection: "EPSG:3857"
+	});
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.addLayers([new OpenLayers.Layer.OSM()]);
+    
+  	var params = {
+			layers: "TA_PARK_ECORES_SV",
+			transparent: true
+		};
+  	var options = {
+			visibility: true,  // Is layer displayed when loaded? 
+			singleTile: false,
+			opacity: 0.7,
+			visibleInLayerSwitcher: false
+		};
+	var wms = new OpenLayers.Layer.WMS("GeoServer", "http://cwm.vividsolutions.com/geoserver/wms",params,options	);
+	// TODO: This doesn't work for some reason.  Is it needed?
+	//if (!OpenLayers.Util.alphaHack()) { layers[l.id].setOpacity(l.opacity); }
+	map.addLayers([wms]); 
+/*
+    var road = new OpenLayers.Layer.Bing({
+        name: "Road",
+        type: "Road"
+    });
+    var hybrid = new OpenLayers.Layer.Bing({
+        name: "Hybrid",
+        type: "AerialWithLabels"
+    });
+    var aerial = new OpenLayers.Layer.Bing({
+        name: "Aerial",
+        type: "Aerial"
+    });
+    map.addLayers([road, hybrid, aerial]);
+    //*/
+    
+    //map.setCenter(new OpenLayers.LonLat(-126, 54), 3);
+    
+    var bcCentre = new OpenLayers.Geometry.Point(-126, 54.5)
+        .transform('EPSG:4326', 'EPSG:3857');
+    map.setCenter(bcCentre.getBounds().getCenterLonLat(), 5);
+}
+
+</script>
+	</body>
+</html>
