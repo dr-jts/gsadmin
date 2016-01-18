@@ -125,6 +125,7 @@
 		this.ajax(url, "json", function(data) { 
 			if (data.styles === "") return;
 			var list = data.styles.style;
+			list.sort(compareName);
 			for (var i = 0; i < list.length; i++) {
 				callback(list[i]);
 			}	
